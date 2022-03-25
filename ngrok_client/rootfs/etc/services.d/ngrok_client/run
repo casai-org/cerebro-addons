@@ -1,0 +1,28 @@
+#!/usr/bin/with-contenv bashio
+
+declare proto
+declare port
+declare subdomain
+
+bashio::log.info "Gathering MAC Address of container"
+MAC_ADDR=$(cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address)
+
+bashio::log.info "Requesting access for MAC ${MAC_ADDR}"
+curl -X POST http://ngrok.casai.com:3333/requestAccess/${MAC_ADDR}
+
+bashio::log.info "Parsing options"
+proto=$(bashio::config 'protocol')
+port=$(bashio::config 'port')
+subdomain=$(bashio::config 'subdomain')
+declare base_args="--proto=${proto} ${port}"
+
+if [[ -n subdomain ]]
+then
+  optional_args="--subdomain=${subdomain} "
+else
+  optional_args=""
+fi
+
+bashio::log.info "${message:="Launching tunnel with command:"}"
+bashio::log.info "/app/bin/ngrok ${optional_args}${base_args}"
+exec /app/bin/ngrok ${optional_args}${base_args}

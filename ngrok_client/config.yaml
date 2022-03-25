@@ -1,0 +1,20 @@
+name: "Ngrok Client"
+description: "Add-on for creating ngrok tunnels"
+version: "0.0.1"
+slug: "ngrok_client"
+host_network: true
+startup: "services"
+watchdog: "[PROTO:http]://[HOST]:[PORT:4040]/"
+panel_icon: "mdi:wan"
+arch:
+  - amd64
+options:
+  name: "cerebro"
+  subdomain: ""
+  protocol: "https"
+  port: 8123
+schema:
+  name: "str"
+  subdomain: "str"
+  protocol: "str"
+  port: "int"
