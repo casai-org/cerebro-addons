@@ -1,6 +1,6 @@
 ARG BUILD_ARCH
 ARG BUILD_FROM
-FROM casai/amd64-ngrok_client:latest AS ngrok_base
+FROM casai/{BUILD_ARCH}-ngrok_client:latest AS ngrok_base
 
 FROM $BUILD_FROM AS homeassistant_base
 
