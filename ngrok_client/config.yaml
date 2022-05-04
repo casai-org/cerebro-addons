@@ -8,6 +8,7 @@ watchdog: "[PROTO:http]://[HOST]:[PORT:4040]/"
 panel_icon: "mdi:wan"
 arch:
   - amd64
+  - armv7
 options:
   name: "cerebro"
   subdomain: ""
